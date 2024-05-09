@@ -1,0 +1,64 @@
+#!/usr/bin/expect -f
+
+# Set a timeout for each expect command (in seconds)
+set timeout 30
+
+# Start the script - assuming starting the installation script
+spawn ./install.sh
+
+# Interaction 1: Start of installation
+expect "Press \"Enter\" to continue with a clean installation..."
+send "\r"
+
+# Interaction 2: Use new local SVN repository
+expect "Do you want use a new local SVN repository with default settings?:"
+send "yes\r"
+
+# Interaction 3: Check and install prerequisites
+expect "Would you like to check and install the prerequisities?"
+send "yes\r"
+
+# Interaction 4: First continuation prompt
+expect "When you are done press Enter to continue."
+send "yes\r"
+
+# Repeated Interaction: Confirmation to continue, repeated four times
+for {set i 0} {$i < 4} {incr i} {
+    expect "Do you want to continue? \[Y/n\]"
+    send "Y\r"
+}
+
+# Interaction 5: Second continuation prompt
+expect "When you are done press Enter to continue."
+send "Y\r"
+
+# Interaction 6: Copy predefined configuration files
+expect "Do you want to copy predefined conf. files into /etc/apache2?"
+send "yes\r"
+
+# Interaction 7: Initialize and configure PostgreSQL database
+expect "Do you want to initialize and configure PostgreSQL database for Polarion?"
+send "yes\r"
+
+# Interaction 8: Set a password for the 'polarion' user
+expect "Please, set a password for user 'polarion' through which Polarion will connect to the database:"
+send "polarion\r"
+
+# Interaction 9: Third continuation prompt
+expect "When you are done press Enter to continue."
+send "Y\r"
+
+# Interaction 10: Initialize repository
+expect "Do you want initialize the repository now?"
+send "yes\r"
+
+# Interaction 11: Install Polarion sample data
+expect "Would you like install Polarion sample data?"
+send "yes\r"
+
+# Final Interaction: Decide on starting Polarion
+expect "Do you want start Polarion now?"
+send "no\r"
+
+# Expect the end of file (EOF) which indicates the script has completed.
+expect eof
