@@ -22,6 +22,9 @@ send "yes\r"
 expect "When you are done press Enter to continue."
 send "yes\r"
 
+expect "Do you want to continue? \[Y/n\]"
+send "Y\r"
+
 # Repeated Interaction: Confirmation to continue, repeated four times
 for {set i 0} {$i < 4} {incr i} {
     expect "Do you want to continue? \[Y/n\]"

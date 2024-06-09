@@ -1,11 +1,10 @@
 #! /bin/bash
 
-systemctl stop polarion
+sudo -u postgres /usr/lib/postgresql/14/bin/pg_ctl -D /opt/polarion/data/postgres-data -l /opt/polarion/data/postgres-data/log.out -o "-p 5434" start
+service apache2 start
 
-# Define the file path
 FILE="/opt/polarion/etc/polarion.properties"
 
-# Other parameters to be added or updated
 OTHER_PARAMS=(
     "com.siemens.polarion.rest.enabled=true"
     "com.siemens.polarion.rest.swaggerUi.enabled=true"
@@ -22,37 +21,31 @@ else
     exit 1
 fi
 
-# Include the dynamic parameter in the array
 PARAMS=(
     "$TomcatServiceRequestSafeListedHosts"
     "${OTHER_PARAMS[@]}"
 )
 
-# Temporarily remove end marker to avoid complications
 sed -i '/^# End property file$/d' "$FILE"
 
-# Function to add or update a parameter
 add_or_update_param() {
     local param="$1"
     local param_name=$(echo "$param" | cut -d '=' -f 1)
     
     if grep -q "^$param_name=" "$FILE"; then
-        # Parameter exists, update it
         sed -i "/^$param_name=/c\\$param" "$FILE"
     else
-        # Parameter does not exist, append it
         echo "$param" >> "$FILE"
     fi
 }
 
-# Loop through all parameters and apply the add_or_update function
 for param in "${PARAMS[@]}"; do
     add_or_update_param "$param"
 done
-
-# Re-add the end marker
 echo "# End property file" >> "$FILE"
 
-echo "Parameters updated or added successfully."
+echo "Polarion Properties Updated Successfully."
+service polarion start
 
-systemctl start polarion
+wait
+tail -f /dev/null
