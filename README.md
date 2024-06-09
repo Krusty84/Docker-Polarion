@@ -1,6 +1,6 @@
 This is a set of scripts that will allow you to containerize the excellent ALM system **[Polarion](https://polarion.plm.automation.siemens.com/en/application-lifecycle-management-alm-tool-trial)** from **[Siemens Digital Industries Software](https://www.sw.siemens.com/en-US/)**
 
- 1. Download the contents of the Polarion 22 folder
+ 1. Download the contents of the Polarion 22 R2 folder
  2. Place **PolarionALM_22_R2_linux.zip** near the **Dockerfile**
  3. Build the image: **docker build -t polarion_v22r2 .**
  4. Launch a container with Polarion: 
