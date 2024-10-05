@@ -9,3 +9,7 @@ This is a set of scripts that will allow you to containerize the excellent ALM s
 *for example:* 
 docker run -d --name polarion22r2 -p 9999:80 -e ALLOWED_HOSTS="192.168.249.66" polarion_v22r2
 After some time you will be able to access your containerized Polarion: http://192.168.249.66:9999/polarion
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8dc3207d-676a-4912-8aaa-ed7786b87c89">
+</p>
